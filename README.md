@@ -43,18 +43,20 @@ CLIENT_SECRET="client_secret"
 
 then invoke the client with a file of your choice:
 ```go
+import "github.com/sypht-team/sypht-golang-client"
+
 client, err := sypht.NewSyphtClientFromEnv(nil)
 if err != nil {
     // handle error
 }
 resp, err := client.Upload("mytaxireceipt.pdf", []string{
-	sypht.Invoice,
-	sypht.Document,
+  sypht.Invoice,
+  sypht.Document,
 })
 if err != nil {
 	// handle error
 } else {
-	sypht.PrettyPrintResponse(resp)
+  sypht.PrettyPrintResponse(resp)
 }
 ```
 
