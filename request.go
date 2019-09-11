@@ -19,14 +19,22 @@ import (
 func (s *Client) Upload(fileName string, options []string) (resp map[string]interface{}, err error) {
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
-	ok := checkFileExt(filepath.Ext(strings.TrimSpace(fileName)))
+	file, err := os.Open(fileName)
+	defer file.Close()
+
+	cType, err := getFileContentType(file)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Printf("file type is %v", cType)
+
+	ok := validateFileFormat(cType, filepath.Ext(strings.TrimSpace(fileName)))
 	if !ok {
 		err = fmt.Errorf("unsupported file : %s", fileName)
 		return
 	}
 
-	file, err := os.Open(fileName)
-	defer file.Close()
 	part, err := writer.CreateFormFile("fileToUpload", filepath.Base(fileName))
 	_, err = io.Copy(part, file)
 
@@ -125,13 +133,25 @@ func parseOptions(options []string) (out string) {
 	return "[" + strings.Join(options, ",") + "]"
 }
 
-func checkFileExt(ext string) (ok bool) {
+func validateFileFormat(format, ext string) (ok bool) {
 	ext = strings.ToLower(ext)
-	supportedExt := []string{".pdf", ".jpeg", ".png", ".gif"}
-	for _, e := range supportedExt {
-		if e == ext {
+	supportedType := []string{"application/pdf", "image/jpeg", "image/png", "image/gif"}
+	for _, t := range supportedType {
+		if t == format {
 			return true
 		}
 	}
+	// have to check extension for tiff file since image/tiff not supported in go's mime contentType
+	return ext == ".tiff"
+}
+
+func getFileContentType(out *os.File) (contentType string, err error) {
+	buffer := make([]byte, 512)
+	_, err = out.Read(buffer)
+	if err != nil {
+		return
+	}
+	out.Seek(0, 0)
+	contentType = http.DetectContentType(buffer)
 	return
 }
