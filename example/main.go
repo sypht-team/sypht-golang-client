@@ -4,11 +4,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/sypht-team/sypht-golang-client/pkg/sypht"
+	"github.com/sypht-team/sypht-golang-client"
 )
 
 const (
-	fileName = "pkg/sypht/assets/sample_invoice.pdf"
+	fileName = "example/assets/sample_invoice.pdf"
 )
 
 func main() {
@@ -33,16 +33,15 @@ func main() {
 		sypht.PrettyPrintResponse(resp)
 	}
 
-	// result, err := client.Results(resp["fileId"].(string))
-	// if err != nil {
-	// 	log.Println(err)
-	// } else {
-	// 	sypht.PrettyPrintResponse(result)
-	// }
+	result, err := client.Results(resp["fileId"].(string))
+	if err != nil {
+		log.Println(err)
+	} else {
+		sypht.PrettyPrintResponse(result)
+	}
 
-	// _, err = client.Image(resp["fileId"].(string), 1)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-
+	_, err = client.Image(resp["fileId"].(string), 1)
+	if err != nil {
+		log.Println(err)
+	}
 }

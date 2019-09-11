@@ -25,7 +25,7 @@ func TestSypht_UploadFile(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	resp, err := client.Upload("assets/sample_invoice.pdf", []string{})
+	resp, err := client.Upload("example/assets/sample_invoice.pdf", []string{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -39,7 +39,7 @@ func TestSypht_PredictionWithCustomFieldSet(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	resp, err := client.Upload("assets/sample_invoice.pdf", []string{
+	resp, err := client.Upload("example/assets/sample_invoice.pdf", []string{
 		Invoice,
 		Document,
 	})
