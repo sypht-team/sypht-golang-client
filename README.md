@@ -50,13 +50,13 @@ if err != nil {
     // handle error
 }
 resp, err := client.Upload("mytaxireceipt.pdf", []string{
-  sypht.Invoice,
-  sypht.Document,
+    sypht.Invoice,
+    sypht.Document,
 })
 if err != nil {
-	// handle error
+    // handle error
 } else {
-  sypht.PrettyPrintResponse(resp)
+    sypht.PrettyPrintResponse(resp)
 }
 ```
 
