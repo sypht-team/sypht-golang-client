@@ -1,8 +1,10 @@
 package sypht
 
 import (
+	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 )
@@ -40,9 +42,13 @@ const (
 
 //NewSyphtClient returns a Sypht client instance,
 // default request timeout is set to 30 seconds, change it as needed
-func NewSyphtClient(clientID string, clientSecret string, timeout *int) (client *Client, err error) {
+func NewSyphtClient(apiKey string, timeout *int) (client *Client, err error) {
 	if timeout == nil || *timeout < 0 {
 		timeout = &defaultTimeout
+	}
+	clientID, clientSecret, err := processAPIKey(apiKey)
+	if err != nil {
+		return
 	}
 	client = &Client{
 		httpClient: &http.Client{
@@ -64,6 +70,17 @@ func NewSyphtClient(clientID string, clientSecret string, timeout *int) (client 
 
 //NewSyphtClientFromEnv same as NewSyphtClient except it reads creds from ENV
 func NewSyphtClientFromEnv(timeout *int) (client *Client, err error) {
-	client, err = NewSyphtClient(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"), timeout)
+	client, err = NewSyphtClient(os.Getenv("SYPHT_API_KEY"), timeout)
+	return
+}
+
+func processAPIKey(apiKey string) (clientID string, clientSecret string, err error) {
+	arr := strings.Split(apiKey, ":")
+	if len(arr) != 2 {
+		err = fmt.Errorf("invalid apikey %s", apiKey)
+		return
+	}
+	clientID = arr[0]
+	clientSecret = arr[1]
 	return
 }

@@ -34,11 +34,10 @@ $ go get github.com/sypht-team/sypht-golang-client
 
 
 ### Usage
-Populate these system environment variables with the credentials generated above:
+Populate system environment variable with the credentials generated above:
 
 ```Bash
-CLIENT_ID="client_id"
-CLIENT_SECRET="client_secret"
+SYPHT_API_KEY="$client_id:$client_secret"
 ```
 
 then invoke the client with a file of your choice:

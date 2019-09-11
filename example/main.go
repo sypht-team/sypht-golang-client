@@ -12,7 +12,7 @@ const (
 )
 
 func main() {
-	client, err := sypht.NewSyphtClient(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"), nil)
+	client, err := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 	if err != nil {
 		log.Fatalf("Fail to initialize Sypht client %v", err)
 	}

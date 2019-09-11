@@ -8,7 +8,7 @@ import (
 )
 
 func initTest() (client *Client, err error) {
-	client, err = NewSyphtClient(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"), nil)
+	client, err = NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 	if err != nil {
 		log.Fatalf("Fail to initialize Sypht client %v", err)
 	}
