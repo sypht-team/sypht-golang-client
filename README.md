@@ -27,21 +27,15 @@ SYPHT_API_KEY="$client_id:$client_secret"
 
 then invoke the client with a file of your choice:
 ```go
-import "github.com/sypht-team/sypht-golang-client"
+client, _ := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 
-client, err := sypht.NewSyphtClientFromEnv(nil)
-if err != nil {
-    // handle error
-}
-resp, err := client.Upload("mytaxireceipt.pdf", []string{
-    sypht.Invoice,
-    sypht.Document,
-})
-if err != nil {
-    // handle error
-} else {
-    sypht.PrettyPrintResponse(resp)
-}
+	uploaded, _ := client.Upload(fileName, []string{
+		sypht.Invoice,
+		sypht.Document,
+	})
+
+	result, _ := client.Results(uploaded["fileId"].(string))
+	sypht.PrettyPrintResponse(result)
 ```
 
 
