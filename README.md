@@ -2,7 +2,7 @@
 This repository is a Golang reference client implementation for working with the Sypht API at https://api.sypht.com.
 
 ## About Sypht
-[Sypht](https://sypht.com) is a SAAS [API]((https://docs.sypht.com/)) which extracts key fields from documents. For 
+[Sypht](https://sypht.com) is a SaaS [API]((https://docs.sypht.com/)) which extracts key fields from documents. For 
 example, you can upload an image or pdf of a bill or invoice and extract the amount due, due date, invoice number 
 and biller information. 
 
