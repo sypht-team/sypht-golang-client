@@ -38,4 +38,8 @@ client, _ := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 	sypht.PrettyPrintResponse(result)
 ```
 
+## License
+This software in this repository is made available using the [Apache License](https://github.com/sypht-team/sypht-golang-client/blob/master/LICENSE)
 
+## Code of Conduct
+Everyone interacting in the project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sypht-team/sol-redis-pool/blob/master/CODE_OF_CONDUCT.md).
