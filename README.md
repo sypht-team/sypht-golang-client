@@ -6,19 +6,19 @@ This repository is a Golang reference client implementation for working with the
 example, you can upload an image or pdf of a bill or invoice and extract the amount due, due date, invoice number 
 and biller information. 
 
-### Getting started
+## Getting started
 To get started you'll need API credentials, i.e. a `client_id` and `client_secret`, which can be obtained by registering
 for an [account](https://www.sypht.com/signup/developer)
 
-### Prerequisites
+## Prerequisites
 * Go - supports **Go 1.13 or greater**.
 
-### Installation
+## Installation
 ```sh
 $ go get github.com/sypht-team/sypht-golang-client
 ```
 
-### Usage
+## Usage
 Populate system environment variable with the credentials generated above:
 
 ```Bash
@@ -38,4 +38,8 @@ client, _ := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 	sypht.PrettyPrintResponse(result)
 ```
 
+## License
+The software in this repository is available as open source under the terms of the [Apache License](https://github.com/sypht-team/sypht-golang-client/blob/master/LICENSE).
 
+## Code of Conduct
+Everyone interacting in the project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/sypht-team/sypht-golang-client/blob/master/CODE_OF_CONDUCT.md).
