@@ -27,7 +27,6 @@ func (s *Client) Upload(fileName string, options []string) (resp map[string]inte
 		log.Println(err)
 		return
 	}
-	log.Printf("file type is %v", cType)
 
 	ok := validateFileFormat(cType, filepath.Ext(strings.TrimSpace(fileName)))
 	if !ok {
