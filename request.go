@@ -16,7 +16,7 @@ import (
 
 // Upload uploads files with fileName
 // options are list of fieldSets constant
-func (s *Client) Upload(fileName string, options []string) (resp map[string]interface{}, err error) {
+func (s *Client) Upload(fileName string, options []string, workflowID string) (resp map[string]interface{}, err error) {
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
 	file, err := os.Open(fileName)
@@ -39,6 +39,9 @@ func (s *Client) Upload(fileName string, options []string) (resp map[string]inte
 
 	fieldSets := parseOptions(options)
 	_ = writer.WriteField("fieldSets", fieldSets)
+	if workflowID != "" {
+		_ = writer.WriteField("workflowId", workflowID)
+	}
 	err = writer.Close()
 	if err != nil {
 		return
