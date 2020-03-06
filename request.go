@@ -128,9 +128,9 @@ func PrettyPrintResponse(mp map[string]interface{}) {
 	fmt.Print(string(b))
 }
 
-func parseOptions(options []string) (out string) {
+func parseOptions(options []string) string {
 	if len(options) == 0 {
-		return
+		return "[]"
 	}
 	return "[" + strings.Join(options, ",") + "]"
 }
