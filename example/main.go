@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/sypht-team/sypht-golang-client"
@@ -17,4 +18,5 @@ func main() {
 		sypht.Document,
 	}, "")
 	result, _ := client.Results(uploaded.FileID)
+	fmt.Println(result)
 }
