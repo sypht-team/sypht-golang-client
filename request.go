@@ -14,9 +14,18 @@ import (
 	"strings"
 )
 
+//UploadResponse response struct
+type UploadResponse struct {
+	FileID     string `json:"fileId"`
+	UploadedAt string `json:"uploadedAt"`
+	Status     string `json:"status"`
+	Message    string `json:"message"`
+	Code       string `json:"code"`
+}
+
 // Upload uploads files with fileName
 // options are list of fieldSets constant
-func (s *Client) Upload(fileName string, options []string, workflowID string) (resp map[string]interface{}, err error) {
+func (s *Client) Upload(fileName string, options []string, workflowID string) (resp UploadResponse, err error) {
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
 	file, err := os.Open(fileName)
@@ -64,7 +73,8 @@ func (s *Client) Upload(fileName string, options []string, workflowID string) (r
 	if err != nil {
 		return
 	}
-	json.Unmarshal(body, &resp)
+	err = json.Unmarshal(body, &resp)
+
 	return
 }
 

@@ -32,7 +32,7 @@ func TestSypht_UploadFile(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if resp["fileId"].(string) == "" {
+	if resp.FileID == "" {
 		t.Error("Empty fileID")
 	}
 }
@@ -49,11 +49,11 @@ func TestSypht_PredictionWithCustomFieldSet(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if resp["fileId"].(string) == "" {
+	if resp.FileID == "" {
 		t.Error("Empty fileID")
 	}
 	time.Sleep(time.Second * 10)
-	_, err = client.Results(resp["fileId"].(string))
+	_, err = client.Results(resp.FileID)
 	if err != nil {
 		t.Error(err)
 	}
