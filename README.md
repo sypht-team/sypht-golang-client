@@ -34,8 +34,8 @@ client, _ := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)
 		sypht.Document,
 	}, "")
 
-	result, _ := client.Results(uploaded["fileId"].(string))
-	sypht.PrettyPrintResponse(result)
+	result, _ := client.Results(uploaded.FileID)
+	fmt.Println(result)
 ```
 
 ## License

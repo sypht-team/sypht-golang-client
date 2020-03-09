@@ -55,7 +55,7 @@ func NewSyphtClient(apiKey string, timeout *int) (client *Client, err error) {
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				return http.ErrUseLastResponse
 			},
-			Timeout: time.Second * time.Duration(*timeout),
+			Timeout: 20 * time.Second * time.Duration(*timeout),
 		},
 		config: &config{
 			clientID:     clientID,
