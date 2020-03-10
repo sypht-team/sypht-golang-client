@@ -29,6 +29,9 @@ func (s *Client) Upload(fileName string, options []string, workflowID string) (r
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
 	file, err := os.Open(fileName)
+	if err != nil {
+		return
+	}
 	defer file.Close()
 
 	cType, err := getFileContentType(file)
@@ -44,10 +47,18 @@ func (s *Client) Upload(fileName string, options []string, workflowID string) (r
 	}
 
 	part, err := writer.CreateFormFile("fileToUpload", filepath.Base(fileName))
+	if err != nil {
+		return
+	}
 	_, err = io.Copy(part, file)
-
+	if err != nil {
+		return
+	}
 	fieldSets := parseOptions(options)
-	_ = writer.WriteField("fieldSets", fieldSets)
+	err = writer.WriteField("fieldSets", fieldSets)
+	if err != nil {
+		return
+	}
 	if workflowID != "" {
 		_ = writer.WriteField("workflowId", workflowID)
 	}
@@ -75,6 +86,29 @@ func (s *Client) Upload(fileName string, options []string, workflowID string) (r
 	}
 	err = json.Unmarshal(body, &resp)
 
+	return
+}
+
+// Results fetches results of uploaded file
+func (s *Client) Results(fileID string) (out map[string]interface{}, err error) {
+	url := strings.Join([]string{s.config.apiBaseURL, "/result/final/", fileID}, "")
+	req, err := http.NewRequest("GET", url, strings.NewReader(""))
+	if err != nil {
+		return
+	}
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Authorization", strings.Join([]string{"Bearer ", s.getToken()}, ""))
+	res, err := s.httpClient.Do(req)
+	if err != nil {
+		return
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return
+	}
+	json.Unmarshal(body, &out)
 	return
 }
 
