@@ -112,29 +112,6 @@ func (s *Client) Results(fileID string) (out map[string]interface{}, err error) 
 	return
 }
 
-// Results fetches results of uploaded file
-func (s *Client) Results(fileID string) (out map[string]interface{}, err error) {
-	url := strings.Join([]string{s.config.apiBaseURL, "/result/final/", fileID}, "")
-	req, err := http.NewRequest("GET", url, strings.NewReader(""))
-	if err != nil {
-		return
-	}
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Content-Type", "application/json")
-	req.Header.Add("Authorization", strings.Join([]string{"Bearer ", s.getToken()}, ""))
-	res, err := s.httpClient.Do(req)
-	if err != nil {
-		return
-	}
-	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return
-	}
-	json.Unmarshal(body, &out)
-	return
-}
-
 // Image retrieves an image copy of the uploaded document.
 func (s *Client) Image(fileID string, page int) (file []byte, err error) {
 	if page <= 0 {
