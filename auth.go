@@ -54,7 +54,10 @@ func (s *Client) RefreshToken() (token string, err error) {
 		return
 	}
 	var dat map[string]interface{}
-	json.Unmarshal(body, &dat)
+	err = json.Unmarshal(body, &dat)
+	if err != nil {
+		log.Panic("invalid credentials, please check your api key.")
+	}
 	token = string(dat["access_token"].(string))
 	s.mutex.Lock()
 	s.apiToken = token
