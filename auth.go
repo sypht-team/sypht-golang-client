@@ -58,7 +58,11 @@ func (s *Client) RefreshToken() (token string, err error) {
 	if err != nil {
 		log.Panic("invalid credentials, please check your api key.")
 	}
-	token = string(dat["access_token"].(string))
+	tokenInterface, ok := dat["access_token"]
+	if !ok {
+		log.Panic("invalid credentials, please check your api key.")
+	}
+	token = string(tokenInterface.(string))
 	s.mutex.Lock()
 	s.apiToken = token
 	s.tokenUpdatedAt = time.Now()
