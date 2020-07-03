@@ -25,6 +25,14 @@ Populate system environment variable with the credentials generated above:
 SYPHT_API_KEY="$client_id:$client_secret"
 ```
 
+Updated 30/06/2020
+We are in the process of deprecating our legacy authentication endpoint.
+To use new authentication endpoint
+```Bash
+SYPHT_AUTH_ENDPOINT="https://auth.sypht.com/oauth2/token"
+```
+[For more info](https://docs.sypht.com/)
+
 then invoke the client with a file of your choice:
 ```go
 client, _ := sypht.NewSyphtClient(os.Getenv("SYPHT_API_KEY"), nil)

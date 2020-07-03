@@ -43,6 +43,10 @@ const (
 //NewSyphtClient returns a Sypht client instance,
 // default request timeout is set to 30 seconds, change it as needed
 func NewSyphtClient(apiKey string, timeout *int) (client *Client, err error) {
+	authURL := os.Getenv("SYPHT_AUTH_ENDPOINT")
+	if authURL == "" {
+		authURL = "https://login.sypht.com/oauth/token"
+	}
 	if timeout == nil || *timeout < 0 {
 		timeout = &defaultTimeout
 	}
@@ -50,6 +54,7 @@ func NewSyphtClient(apiKey string, timeout *int) (client *Client, err error) {
 	if err != nil {
 		return
 	}
+
 	client = &Client{
 		httpClient: &http.Client{
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -61,7 +66,7 @@ func NewSyphtClient(apiKey string, timeout *int) (client *Client, err error) {
 			clientID:     clientID,
 			clientSecret: clientSecret,
 			apiBaseURL:   "https://api.sypht.com",
-			authURL:      "https://login.sypht.com/oauth/token",
+			authURL:      authURL,
 		},
 	}
 	_, err = client.RefreshToken()
