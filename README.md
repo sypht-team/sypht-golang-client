@@ -31,6 +31,7 @@ To use new authentication endpoint
 ```Bash
 SYPHT_AUTH_ENDPOINT="https://auth.sypht.com/oauth2/token"
 ```
+[For more info](https://docs.sypht.com/)
 
 then invoke the client with a file of your choice:
 ```go
